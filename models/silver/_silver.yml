@@ -9,8 +9,9 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('stg_sales__orders')
-              field: order_id
+              arguments:
+                to: ref('stg_sales__orders')
+                field: order_id
 
       - name: item_id
         description: "Line item number within the order"
@@ -22,8 +23,9 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('stg_production__products')
-              field: product_id
+              arguments:
+                to: ref('stg_production__products')
+                field: product_id
 
       - name: customer_id
         tests:
@@ -61,10 +63,12 @@ models:
         tests:
           - not_null
           - dbt_utils.expression_is_true:
-              expression: ">= 0"
+              arguments:
+                expression: ">= 0"
 
     tests:
       - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - order_id
-            - item_id
+          arguments:
+            combination_of_columns:
+              - order_id
+              - item_id
