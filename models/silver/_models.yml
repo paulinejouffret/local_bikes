@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: int_revenue_per_order_item
+    description: "Grain: one row per order line item. Joins orders, products, stores, brands and categories to compute revenue."
+    columns:
+      - name: order_id
+        description: "Foreign key to stg_sales__orders"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales__orders')
+              field: order_id
+
+      - name: item_id
+        description: "Line item number within the order"
+        tests:
+          - not_null
+
+      - name: product_id
+        description: "Foreign key to stg_production__products"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_production__products')
+              field: product_id
+
+      - name: customer_id
+        tests:
+          - not_null
+
+      - name: store_id
+        tests:
+          - not_null
+
+      - name: staff_id
+        tests:
+          - not_null
+
+      - name: order_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4]
+
+      - name: quantity
+        tests:
+          - not_null
+
+      - name: list_price
+        tests:
+          - not_null
+
+      - name: discount
+        tests:
+          - not_null
+
+      - name: revenue
+        description: "quantity * list_price * (1 - discount), rounded to 2 decimals"
+        tests:
+          - not_null
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - order_id
+            - item_id
