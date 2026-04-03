@@ -59,6 +59,8 @@ models:
         description: "quantity * list_price * (1 - discount), rounded to 2 decimals"
         tests:
           - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
 
     tests:
       - dbt_utils.unique_combination_of_columns:
