@@ -23,3 +23,7 @@ models:
         +schema: staging_sales
       production:
         +schema: staging_production
+    silver:
+      +materialized: view
+    gold:
+      +materialized: table
