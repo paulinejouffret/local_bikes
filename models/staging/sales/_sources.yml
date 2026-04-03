@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: sales
+    database: databird-202602
+    schema: local_bike_source
+    tables:
+      - name: raw_orders
+      - name: raw_order_items
+      - name: raw_stores
+      - name: raw_staffs
+      - name: raw_customers
